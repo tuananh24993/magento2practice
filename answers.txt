@@ -1,0 +1,118 @@
+0.	- Example PHP code for Factory pattern 
+	<?php
+	class Automobile
+	{
+	    private $vehicleMake;
+	    private $vehicleModel;
+
+	    public function __construct($make, $model)
+	    {
+		$this->vehicleMake = $make;
+		$this->vehicleModel = $model;
+	    }
+
+	    public function getMakeAndModel()
+	    {
+		return $this->vehicleMake . ' ' . $this->vehicleModel;
+	    }
+	}
+
+	class AutomobileFactory
+	{
+	    public static function create($make, $model)
+	    {
+		return new Automobile($make, $model);
+	    }
+	}
+
+	// have the factory create the Automobile object
+	$veyron = AutomobileFactory::create('Bugatti', 'Veyron');
+
+	print_r($veyron->getMakeAndModel()); // outputs "Bugatti Veyron"
+
+	- Example PHP code for Observer pattern :
+	<?php
+
+	namespace DesignPatterns\Behavioral\Observer;
+
+	class UserObserver implements \SplObserver
+	{
+	    /**
+	     * @var User[]
+	     */
+	    private $changedUsers = [];
+
+	    /**
+	     * It is called by the Subject, usually by SplSubject::notify()
+	     *
+	     * @param \SplSubject $subject
+	     */
+	    public function update(\SplSubject $subject)
+	    {
+		$this->changedUsers[] = clone $subject;
+	    }
+
+	    /**
+	     * @return User[]
+	     */
+	    public function getChangedUsers(): array
+	    {
+		return $this->changedUsers;
+	    }
+	}
+
+1. How Magento auto load class? Where is the auto loading implementatio? Path finding and naming convention? 
+Thông thường trong một ứng dụng php oops, các lớp được phân phối trên các tệp php khác nhau. Vì vậy, khi muốn sử dụng một lớp bạn cần "included" hoặc "requires" các tập tin php nó được định nghĩa. Sẽ có khả năng bạn phải included 100 tập tin php bên ngoài trong một 	trang duy nhất, đó là tối kị.
+Để giải quyết vấn đề này, autoload class đã ra đời. Trong OOP, dựa trên class name, autoload class cố gắng tìm đường dẫn của tập tin php và tự động include nó. 
+implemen tại : lib\Varien\Autoload.php và app/Mage.php
+
+2. How to use magic method in Magneto? Where do Magento set/get data when c
+alling magic method?
+
+Các đối tượng của Magento (được kế thừa từ Varien_Object) có các phương thức getter và setter đặc biệt được triển khai bằng phương thức magic __call của PHP. Nếu bạn có một đối tượng Magento, chỉ cần thiết lập và nhận dữ liệu như thế này, 
+	$this->setFooBar('a value');
+	echo $this->getFooBar();
+
+mà không cần phải định nghĩa phương thức setFooBar hoặc getFooBar 
+
+3. Where  will  Magento  store  log  detail  when  an  exception  happens?
+
+Lưu trong var/report và var/log/exception.log
+
+4.  How  cookie  and  session  work  and  transfer  between  server  and  client?
+
+	Khi bạn ghé thăm một site có thiết lập Cookie, các câu lệnh bên trong trang web này cho phép trình duyệt của bạn liên hệ với server của site. Server này gửi thông tin ngược lại cho trình duyệt và thông tin đó được lưu vào một nơi đặc biệt trên đĩa cứng của bạn. Các trình duyệt khác nhau sẽ lưu Cookie ở những nơi khác nhau. Netscape Navigator duy trì một tập tin có tên Cookie.txt chứa tất cả những Cookie từ bất cứ site nào có tạo ra Cookie. Trên một máy tính cá nhân chạy Windows, Internet Explorer lưu các Cookie của nó trong thư mục C:\windows\ Cookies. Khi bạn quay trở lại site, server của site hỏi trình duyệt của bạn để tìm Cookie mà trước kia nó đã tạo và trình duyệt đáp lại bằng cách gửi thông tin của Cookie cho server
+
+	Session khi sinh ra được lưu trên 1 file có tên dài dòng, khó đoán và được tạo ngẫu nhiên là session id trên máy chủ, và đồng thời ở máy client cũng có 1 cookie sinh ra có nội dung (hay giá trị) đúng như session id (để có thể so khớp session nào là của client nào) đối với mỗi ngôn ngữ lập trình web sẽ có tên cookie quy định như php là PHPSESSID
+
+5.   Difference  between  namespace  and  traditional  include/require ?
+
+- require/include giúp thực hiện inport một file thông qua đó có thể  sử dụng các thành phần trong đó như lib,class, function,..
+- namespace giúp tạo ra không gian làm việc cho hàm và lớp, giúp tránh có sự xung đột về tên class
+
+6.  List  some  AMD  modules  you  see  in  Magento  2 ?
+
+Requiresjs, knockoutjs.
+
+7.  What  method  can  be  used  to  debug  in  PHP?  Where  is  PHP  error  log in  your  local  setup?  How  many  PHP  error  level? 
+
+-method debug in PHP: die(), echo, var_dump();
+
+-file log in my local setup is /var/log/apache2/error.log
+
+- có 16 mức level PHP errors: 
+
+8. What information/features do we have in JS debugger built in browsers? 
+- chúng ta chạy lần lượt từ dòng code để theo dõi, xác định lỗi đến từng điểm breakpoint mà ta ấn định
+
+
+
+
+
+
+
+
+
+
+
+

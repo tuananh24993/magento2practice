@@ -1,0 +1,14 @@
+Check hiệu năng của việc đánh index:
+
+Ví dụ: 
+-	Non index:
+	SELECT * FROM students WHERE age < 14 AND name LIKE ‘$3$’;	
+	Showing rows 0 - 24 (26944 total, Query took 0.0008 seconds.)
+
+-	Index:
+	SELECT * FROM students_index WHERE age < 14 AND name LIKE ‘$3$’;
+	Showing rows 0 - 24 (27000 total, Query took 0.0005 seconds.)
+
+=> đánh index giúp cái thiện hiệu năng khá nhiều so với việc ko đánh index.
+	
+	
